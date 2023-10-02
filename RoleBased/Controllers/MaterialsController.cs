@@ -64,35 +64,41 @@ namespace RoleBased.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowMaterials(int pageNumber = 1)
+        public ActionResult ShowMaterials(string status, int materialsId, int pageNumber = 1)
         {
 
-            
+
             MaterialsIndexVM materialsIndexVM = new MaterialsIndexVM();
 
             MaterialsViewModel materialsViewModel = new MaterialsViewModel();
 
             materialsIndexVM.MaterialsViewModel = materialsViewModel;
-            //var data = TempData["key"] as string;
-            //if(data != null )
-            //{
-            //    materialsIndexVM.MaterialsViewModel.ShowStatus = data.ToString();
-            //}
-            
 
-            //var materialsStatus = _unitOfWorkRepo.Repository<Material>().
+
+            List<Material> AllMaterials = _unitOfWorkRepo.Repository<Material>().getAll().ToList();
+
+            Similarities algo = new Similarities(AllMaterials);
+            List<int> MaterialsId = algo.GetSimilarProducts(materialsId);
+
+
+            List<Material> recommendProducts = AllMaterials.Where(p => MaterialsId.Contains(p.materialsId)).Cast<Material>().ToList();
+
+
+
 
 
             materialsIndexVM.MaterialsViewModels = _materialsServices.GetAll();
             //materialsIndexVM.MaterialsViewModel = new MaterialsViewModel();
             materialsIndexVM.MaterialspaginatedList = PaginatedList<MaterialsViewModel>.Create(materialsIndexVM.MaterialsViewModels.AsQueryable(), pageNumber, 5);
+            materialsIndexVM.RecommendProduct = recommendProducts;
+            materialsIndexVM.UseStatus = status;
             return View(materialsIndexVM);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-          
+
             MaterialsViewModel materialsViewModel = new MaterialsViewModel();
             materialsViewModel.userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -106,7 +112,7 @@ namespace RoleBased.Controllers
         {
             try
             {
-               
+
                 _materialsServices.save(materialsIndexVM.MaterialsViewModel);
                 return Json(true);
 
@@ -139,7 +145,7 @@ namespace RoleBased.Controllers
 
             materialsIndexVM.MaterialsViewModels = _materialsServices.GetByUserId();
             //materialsIndexVM.MaterialsViewModel = new MaterialsViewModel();
-            materialsIndexVM.MaterialspaginatedList = PaginatedList<MaterialsViewModel>.Create(materialsIndexVM.MaterialsViewModels.AsQueryable(), pageNumber,5);
+            materialsIndexVM.MaterialspaginatedList = PaginatedList<MaterialsViewModel>.Create(materialsIndexVM.MaterialsViewModels.AsQueryable(), pageNumber, 5);
             return View(materialsIndexVM);
         }
 
@@ -151,7 +157,7 @@ namespace RoleBased.Controllers
                 _materialsServices.delete(materialsId);
                 return Json(true);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return Json(false);
@@ -181,7 +187,7 @@ namespace RoleBased.Controllers
                 return RedirectToAction("Materials");
 
             }
-            catch(Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
@@ -224,7 +230,7 @@ namespace RoleBased.Controllers
                 return PartialView(materialsIndexVM);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
@@ -238,27 +244,27 @@ namespace RoleBased.Controllers
             {
                 var materials = _unitOfWorkRepo.Repository<Material>().getById(materialsIndexVM.MaterialsViewModel.materialsId);
                 materials.Status = materialsIndexVM.MaterialsViewModel.Status;
-            
 
-               
+
+
 
 
 
 
 
                 _unitOfWorkRepo.Repository<Material>().update(materials);
-                
-            
+
+
 
                 _unitOfWorkRepo.Commit();
 
-                //MaterialsIndexVM materialsIndexVM1 = new MaterialsIndexVM();
+                MaterialsIndexVM materialsIndexVM1 = new MaterialsIndexVM();
                 //materialsIndexVM1.RecommendProduct = recommendProducts;
-                //materialsIndexVM1.UseStatus = name;
+                materialsIndexVM1.UseStatus = "Approve";
 
                 return true;
-              
-               
+
+
 
             }
             catch (Exception ex)

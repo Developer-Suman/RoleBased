@@ -11,19 +11,22 @@
         .employee-image__container img {
             max-width: 100%;
             max-height: 100%;
-  
         }
 </style>
+
+
+<div class="container m-0">
+    <div class="row">
+        <div class="container-fluid mt-3 py-2" style="background-color:#2c2a2a;  ">
+        </div>
+
+
+
+    </div>
+</div>
+
 <div class="container m-0">
 
-
-    @{
-        var checkStatus = Model.UseStatus;
-        //var approvedStatus = RoleBased.Enum.MaterialStatus.Approved;
-    }
-
-    <p>CheckStatus: @checkStatus</p>
-    @*<p>ApprovedStatus: @approvedStatus</p>*@
 
     <div class="row">
         <div class="col-lg-12 col-xl-12 col-md-7 col-sm-7">
@@ -34,12 +37,12 @@
                 <div class="card-body">
                     <form asp-action="UpateMaterials" id="formIdCreateProject" method="post" enctype="multipart/form-data">
                         <div class="form-group row">
-                            <input type="hidden" asp-for="MaterialsViewModel.materialsId" />
+                            <input type="hidden" asp-for="MaterialsViewModel.materialsId" id="materialsId" />
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                <label for="inputName" class="col-md-3 form-label">Materials Name</label>
-                                @Html.DisplayFor(model => model.MaterialsViewModel.materialName)
+                                    <label for="inputName" class="col-md-3 form-label">Materials Name</label>
+                                    @Html.DisplayFor(model => model.MaterialsViewModel.materialName)
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName" class="col-md-3 form-label">Username</label>
@@ -62,22 +65,22 @@
                                     @Html.DisplayFor(model => model.MaterialsViewModel.CreatedDate)
                                 </div>
                                 <div class="form-group">
-              
+
                                     <label for="inputName" class="col-md-3 form-label">Status:</label>
 
-                                    <select asp-for="MaterialsViewModel.Status" asp-items="Html.GetEnumSelectList<RoleBased.Enum.MaterialStatus>()">
+                                    <select asp-for="MaterialsViewModel.Status" asp-items="Html.GetEnumSelectList<RoleBased.Enum.MaterialStatus>()" class="status">
                                         <option value="">Materials Status</option>
                                     </select>
 
-                                </div>  
+                                </div>
                             </div>
 
-                     
+
 
 
                         </div>
 
-
+@*
                         <div class="form-group mb-0 mt-4">
                             <div class="col-md-9">
 
@@ -90,7 +93,7 @@
 
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             </div>
-                        </div>
+                        </div>*@
                     </form>
                 </div>
             </div>
@@ -100,73 +103,10 @@
 <div class="container m-0">
     <div class="row">
         <div class="container-fluid mt-3 py-2" style="background-color:#2c2a2a;  ">
-            <h8 style="color:white;">Recommended Materials </h8>
+           
         </div>
 
-        @foreach (var item in Model.RecommendProduct)
-        {
-            <div class="col-md-5 mt-4 text-md-center    ">
-                <div class="card" style="width: 18rem; ">
-
-
-                    <div class="card-bodys">
-                        <h5 class="card-title py-2" style="font-weight: bold; font-family: " Arial", sans-serif;">-- @Html.DisplayFor(modelItem => item.materialName) --</h5>
-
-                        <div class="d-flex" style="width:100%; justify-content:center; object-fit:cover;">
-                            <img class="card-img-top d-flex" src="~/Images/@item.Image" alt="Suman" style="width:100px;height:100px; object-fit:cover; border-radius:10px; border:2px solid green;" />
-                        </div>
-                        <div class="mt-1">
-                            @{
-                                var status = item.Status;
-
-                                if (status == RoleBased.Enum.MaterialStatus.Approved)
-                                {
-                                    <a class="badge badge-success btn-stss btn-activate text-white">Accepted</a>
-                                }
-                                else if (status == RoleBased.Enum.MaterialStatus.Pending)
-                                {
-                                    <a class="badge badge-info btn-stss btn-inactivate text-white">Pending</a>
-
-                                }
-                                else
-                                {
-                                    <a class="badge badge-danger btn-stss btn-inactivate text-white">Rejected</a>
-                                }
-                            }
-                        </div>
-
-
-
-
-
-                        <div class="d-flex mt-3 py-4" style="justify-content:space-evenly;">
-
-                            @{
-                                var Status = item.Status;
-                                if (Status == RoleBased.Enum.MaterialStatus.Approved)
-                                {
-                                    <span style="display: none;"></span>
-                                }
-                                else
-                                {
-                                    <a class=" btn-success btn-icon btn-sm tpd btnUpdate" data-ajax="true" id="@item.materialsId" modal-id="@item.materialsId" data-toggle="modal" data-target=".project-modal" style="background-color:#33b482;color:#fff;">
-                                        More  <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
-                                    </a>
-                                }
-                            }
-
-
-                            <p class="card-text"><b>Rs:<i> @Html.DisplayFor(modelItem => item.Amount)</i></b></p>
-                        </div>
-
-
-
-
-                    </div>
-                </div>
-            </div>
-
-        }
+       
 
     </div>
 </div>
@@ -192,7 +132,7 @@
     $(".btnUpdate").on('click', function () {
         debugger;
         var form = $("#formIdCreateProject").serialize();
-       
+
         //}
         $.ajax({
             type: "POST",
@@ -220,6 +160,11 @@
 
     });
 
-
+    $('.status').on('change', function () {
+        debugger
+        var status = $('.status option:selected').text();
+        var materialsId = document.getElementById('materialsId').value;
+        window.location.href = '/Materials/ShowMaterials?status=' + status + '&MaterialsId=' + materialsId;
+    });
 </script>
 
