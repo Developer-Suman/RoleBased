@@ -76,13 +76,13 @@ namespace RoleBased.Controllers
         }
 
         [HttpPost]
-        public bool UpdateCategory(CategoryViewModel categoryViewModel)
+        public IActionResult UpdateCategory(CategoryViewModel categoryViewModel)
         {
             try
             {
                 _categoriesServices.update(categoryViewModel);
-                return true;
-                //return RedirectToAction("Category");
+              
+                return RedirectToAction("Category");
 
             }
             catch (Exception ex)
