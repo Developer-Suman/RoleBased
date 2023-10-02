@@ -1,0 +1,412 @@
+﻿@model RoleBased.Models.ViewModel.MaterialsIndexVM
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*Add Task Button*@
+@*@await Html.PartialAsync("~/Views/TaskManager/_AddTask.cshtml")*@
+
+<link href="~/css/materials.css" rel="stylesheet" />
+<link href="~/lib/JqueryToast/jquery.toast.css" rel="stylesheet" />
+
+<section class="projects mt-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="container d-flex justify-content-between align-items-center">
+                <h5>Materials List</h5>
+
+                <button class="btn" style="background-color:#33b582; color:#fff;" data-target="#add-project__container" data-toggle="modal"><i class="feather feather-plus "></i>Add New Materials</button>
+            </div>
+
+            @*table-responsive*@
+
+            <table class="table table-border ">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Materials Name</th>
+                        <th>Amount</th>
+                        <th>Materials Image</th>
+                        <th>Status</th>
+                        <th>CreatedDate</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @{
+                        int i = 1;
+                    }
+
+                    @foreach (var items in Model.MaterialspaginatedList)
+                    {
+                        @if (items.materialsId != 0)
+                        {
+                            <tr role="row" class="odd" data-id="@items.materialsId">
+                                <td>@(i++)</td>
+                                <td>@Html.DisplayFor(modelItem => items.materialName)</td>
+                                <td>@Html.DisplayFor(modelItem => items.Amount)</td>
+
+                                <td class="employee">
+
+                                    <div class="employee-image__container">
+                                        <img src="~/Images/@items.Image" alt="Brajesh Gupta" />
+                                        <span class="employee-name">@Html.DisplayFor(modelItem=> items.materialName)</span>
+                                    </div>
+
+                                </td>
+
+                                <td class="statuss-btnss">
+
+                             @*       <a class="badge badge-success btn-stss btn-activate text-white">@Html.DisplayFor(modelItem=>items.Status)</a>*@
+
+
+
+                                    @{
+                                        var status = items.Status;
+
+                                        if (status == RoleBased.Enum.MaterialStatus.Approved)
+                                        {
+                                            <a class="badge badge-success btn-stss btn-activate text-white">Accepted</a>
+                                        }
+                                        else if (status == RoleBased.Enum.MaterialStatus.Pending)
+                                        {
+                                            <a class="badge badge-info btn-stss btn-inactivate text-white">Pending</a>
+                                            //<button type="button" class="badge badge badge-info btn-inactivate text-white">Pending</button>
+                                        }
+                                        else
+                                        {
+                                            <a class="badge badge-danger btn-stss btn-inactivate text-white">Rejected</a>
+                                        }
+                                    }
+
+
+
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => items.CreatedDate)</td>
+                                <td>
+                                    <div>
+                                        <a class="btn btn-icon btn-sm tpd btnUpdate" style="background-color:#33b582; color:#fff;" data-ajax="true" id="@items.materialsId" modal-id="@items.materialsId" data-toggle="modal" data-target=".project-modal">
+                                            Edit  <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger btn-icon btn-sm delete-btn" style=" color:#fff;" data-ajax="true" data-id="@items.materialsId" data-toggle="modal" data-target="#holidaymoda" data-original-title="Delete">
+                                            Delete <i class="feather feather-trash-2"></i>
+                                        </a>
+
+                                    </div>
+                                 
+
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="hr-holiday_paginate">
+
+
+                <ul class="pagination">
+                    @if (Model.MaterialspaginatedList.PageIndex > 1)
+                    {
+                        <li class="paginate_button page-item previous" id="hr-holiday_previous">
+                            <a asp-action="Materials"
+                           asp-route-pageNumber="@(Model.MaterialspaginatedList.PageIndex - 1)"
+                               aria-controls="hr-holiday" data-dt-idx="0" tabindex="0" class="page-link">
+                                Previous
+                            </a>
+                        </li>
+                    }
+                    @if (Model.MaterialspaginatedList.PageIndex < Model.MaterialspaginatedList.TotalPages)
+                    {
+                        <li class="paginate_button page-item next " id="hr-holiday_next">
+                            <a asp-action="Materials"
+                           asp-route-pageNumber="@(Model.MaterialspaginatedList.PageIndex + 1)"
+                               aria-controls="hr-holiday" data-dt-idx="3" tabindex="0" class="page-link ">
+                                Next
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Holiday Modal used for edit -->
+
+<div class="modal fade project-modal" id="project-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="project-content">
+        </div>
+
+    </div>
+</div>
+@*Add Project Form in Modal*@
+<section id="add-project__container" class="modal fade ">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content card">
+            <div class="card-body">
+
+                <form id="formIdCreateProject" method="POST" enctype="multipart/form-data">
+
+                    <input type="hidden" asp-for="MaterialsViewModel.userId" />
+                    <h1 class="text-center text-uppercase title">Add Materials</h1>
+
+
+                    <div class="form-group">
+                        <label for="title">Materials Name:</label>
+                        <input type="text" class="form-control" asp-for="MaterialsViewModel.materialName" placeholder="Materials Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Materials Amount:</label>
+                        <input type="text" class="form-control" asp-for="MaterialsViewModel.Amount" placeholder="Materials Amount">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Materials Image:</label>
+                        <input type="file" asp-for="MaterialsViewModel.File" class="form-control" />
+                        @* <input type="file" class="form-control" asp-for="MaterialsViewModel.File" placeholder="Materials Image">*@
+                    </div>
+
+                  @*   <div class="form-group">
+                    <label for="title">Project Status:</label>
+                    <select class="form-control" asp-for="ProjectViewModel.ProjectStatus" asp-items="Html.GetEnumSelectList<HRMS_Silicon.Enum.ProjectStatusEnum>()">
+                    <option value="">Select Project Status</option>
+                    </select>
+                    </div>*@
+
+                    <div class="form-group">
+                    <label for="title">Categories</label>
+                        @Html.DropDownListFor(x => x.MaterialsViewModel.CatagoriesId, (SelectList)ViewBag.CategoryDropDown, "Select Categories", new { @class = "form-control required" })
+                    </div>
+
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button class="btn btn-outline-dark  w-30 mr-2 p-2" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary w-30 p-2" type="button" id="submitButtonProject">Add Materials</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Employee Modal used for deletion -->
+<div class="modal fade" id="holidaymoda">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-primary deletebtns delete-item">Delete</button>
+                <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/lib/JqueryToast/jquery.toast.js"></script>
+
+<script>
+    $("#submitButtonProject").click(function (ev) {
+
+        ev.preventDefault();
+        debugger;
+
+
+
+        var form = $('#formIdCreateProject')[0];
+        var formData = new FormData(form);
+        //formData.append('file', $('input[type=file]')[0].files[0]);
+
+        //var form = $("#formIdCreateProject").serialize();
+
+
+        var validator = $("#formIdCreateProject").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+
+
+        $.ajax({
+     
+            type: "POST",
+            url: "/Materials/Create",
+            //data: form,
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            
+
+            success: function (data) {
+                if (data === true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Project Create Success',
+                        icon: 'success',
+                        position: 'top-right',
+
+                    })
+                    //reload page after create and Toast message nice na haha
+                    $('#inputName').val('');
+
+                    window.location.href = '/Materials/Materials';
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Data is Already Exist in the system',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+                }
+            },
+            error: function (data) {
+                $.toast({
+                    heading: 'Error',
+                    text: 'Project Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+
+    });
+
+
+
+    $(".btnUpdate").on('click', function () {
+        debugger;
+        var Id = $(this).attr('id');
+        $.ajax({
+            type: "GET",
+            url: "/Materials/MaterialsUpdate",
+            data: { materialsId: Id },
+            success: function (response) {
+                $('#project-content').html(response);
+                if (data === true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Project Create Success',
+                        icon: 'success',
+                        position: 'top-right',
+
+                    })
+                    //reload page after create and Toast message nice na haha
+                    $('#inputName').val('');
+
+                    window.location.href = '/Materials/Materials';
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error); 
+            }
+        });
+    });
+
+
+
+    $(".deletebtns").click(function () {
+        debugger
+        let id = this.id;
+        $.ajax({
+            type: "POST",
+            url: "/Materials/DeleteMaterials",
+            data: { materialsId: id },
+
+            success: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Success',
+                    text: 'Project delete Succeed',
+                    icon: 'success',
+                    position: 'top-right'
+
+                })
+
+                window.location.href = '/Materials/Materials';
+
+            },
+            error: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Project delete Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+
+        });
+    });
+
+</script>
+<script>
+    var msg = '@TempData["SuccessMessage"]';
+    if (msg.length) {
+        $.toast({
+            heading: 'Success',
+            text: 'Project Update Success',
+            icon: 'success',
+            position: 'top-right',
+
+        })
+        //reload page after create and Toast message nice na haha
+        $('#inputName').val('');
+
+        window.location.href = '/Materials/Materials';
+    }
+
+    //if(msg.length){
+    //    alert(msg);
+    //}
+</script>
+

@@ -1,0 +1,110 @@
+﻿.running {
+    color: #36f;
+}
+
+.todo {
+    color: #a38320;
+}
+
+#add-project__container {
+    backdrop-filter: blur(4px);
+}
+
+/*.card-bodys {
+
+    height:100%;
+    box-shadow: 15px 13px 5px -9px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 15px 13px 5px -9px rgba(0,0,0,0.5);
+    -moz-box-shadow: 15px 13px 5px -9px rgba(0,0,0,0.5);
+}*/
+
+
+
+.completed {
+    color: #0dcd94;
+}
+
+.overdue {
+    color: #f7284a;
+}
+
+/*employee styles*/
+.employee {
+    display: flex;
+}
+
+.employee-image__container {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    position: relative;
+}
+
+    .employee-image__container img {
+        border: 2px solid #fff;
+        border-radius: 50%;
+        width: 3rem;
+        height: 3rem;
+        object-fit: cover;
+        cursor: pointer;
+    }
+
+    /*shifting all to left except the first one*/
+    .employee-image__container:not(.employee-image__container:first-child) {
+        margin-left: -1rem;
+    }
+
+    .employee-image__container .employee-name {
+        position: absolute;
+        bottom: -30%;
+        left: 0%;
+        white-space: nowrap;
+        font-size: 0.8em;
+        opacity: 0;
+    }
+
+    /*lifting image up and showing name of employee*/
+    .employee-image__container img:hover {
+        position: absolute;
+        z-index: 10;
+    }
+
+        .employee-image__container img:hover + .employee-name {
+            opacity: 1;
+            transition: all 0.5s ease-in;
+        }
+
+
+/*div.card {
+    width: 250px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}
+*/
+
+/*login*/
+
+body {
+    width: 100%;
+}
+
+
+
+.loginCard {
+    border: 1px solid #33b482;
+    height: auto;
+    width: auto;
+}
+
+.login-card {
+    min-height: 400px;
+    
+}
+
+.box {
+    height: 140px;
+    width: 140px;
+    box-shadow: 5px 4px;
+}
+  
+

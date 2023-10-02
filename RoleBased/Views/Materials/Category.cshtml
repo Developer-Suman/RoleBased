@@ -1,0 +1,318 @@
+﻿@model RoleBased.Models.ViewModel.CategoryIndexVM
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*Add Task Button*@
+@*@await Html.PartialAsync("~/Views/TaskManager/_AddTask.cshtml")*@
+
+<link href="~/css/materials.css" rel="stylesheet" />
+<link href="~/lib/JqueryToast/jquery.toast.css" rel="stylesheet" />
+
+<section class="projects mt-5">
+    <div class="card">
+        <div class="card-body">
+            <div class="container d-flex justify-content-between align-items-center">
+                <h5>Materials List</h5>
+
+                <button class="btn btn-success" data-target="#add-project__container" data-toggle="modal"><i class="feather feather-plus "></i>Add New Categories</button>
+            </div>
+
+            <table class="table table-responsive mr-5 ml-5 table-border ">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Materials Name</th>
+                        <th>CreatedDate</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @{
+                        int i = 1;
+                    }
+
+                    @foreach (var items in Model.CategoriesPaginatedList)
+                    {
+                        @if (items.CategoriesId != 0)
+                        {
+                            <tr role="row" class="odd" data-id="@items.CategoriesId">
+                                <td>@(i++)</td>
+                                <td>@Html.DisplayFor(modelItem => items.CategoriesName)</td>
+                                <td>@Html.DisplayFor(modelItem => items.CreatedDate)</td>
+                                <td>
+                                    <a class="btn btn-success btn-icon btn-sm tpd btnUpdate" data-ajax="true" id="@items.CategoriesId" modal-id="@items.CategoriesId" data-toggle="modal" data-target=".project-modal">
+                                        Edit  <i class="feather feather-edit" data-toggle="tooltip" data-original-title="Edit"></i>
+                                    </a>
+
+
+
+                                    <a class="btn btn-danger btn-icon btn-sm delete-btn" data-ajax="true" data-id="@items.CategoriesId" data-toggle="modal" data-target="#holidaymoda" data-original-title="Delete">
+                                        Delete <i class="feather feather-trash-2"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers" id="hr-holiday_paginate">
+
+
+                <ul class="pagination">
+                    @if (Model.CategoriesPaginatedList.PageIndex > 1)
+                    {
+                        <li class="paginate_button page-item previous" id="hr-holiday_previous">
+                            <a asp-action="Category"
+                           asp-route-pageNumber="@(Model.CategoriesPaginatedList.PageIndex - 1)"
+                               aria-controls="hr-holiday" data-dt-idx="0" tabindex="0" class="page-link">
+                                Previous
+                            </a>
+                        </li>
+                    }
+                    @if (Model.CategoriesPaginatedList.PageIndex < Model.CategoriesPaginatedList.TotalPages)
+                    {
+                        <li class="paginate_button page-item next " id="hr-holiday_next">
+                            <a asp-action="Category"
+                           asp-route-pageNumber="@(Model.CategoriesPaginatedList.PageIndex + 1)"
+                               aria-controls="hr-holiday" data-dt-idx="3" tabindex="0" class="page-link ">
+                                Next
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Holiday Modal used for edit -->
+
+<div class="modal fade project-modal" id="project-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="project-content" >
+        </div>
+
+    </div>
+</div>
+
+@*Add Project Form in Modal*@
+<section id="add-project__container" class="modal fade ">
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content card">
+            <div class="card-body">
+
+                <form id="formIdCreateProject" method="POST" enctype="multipart/form-data">
+
+                    <input type="hidden" asp-for="CategoryViewModel.userId" />
+                    <h1 class="text-center text-uppercase title">Add Category</h1>
+
+
+                    <div class="form-group">
+                        <label for="title">Category Name:</label>
+                        <input type="text" class="form-control" asp-for="CategoryViewModel.CategoriesName" placeholder="Categories Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Created Date:</label>
+                        <input type="date" class="form-control" asp-for="CategoryViewModel.CreatedDate" placeholder="Materials Amount">
+                    </div>
+
+           
+
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button class="btn btn-outline-dark  w-30 mr-2 p-2" type="button" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary w-30 p-2" type="button" id="submitButtonProject">Add Category</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Employee Modal used for deletion -->
+<div class="modal fade" id="holidaymoda">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h1>Delete</h1>
+                    <p>Are you sure you want to delete ?</p>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button class="btn btn-primary deletebtns delete-item">Delete</button>
+                <button class="btn btn-outline-primary cancelbtn" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/lib/JqueryToast/jquery.toast.js"></script>
+
+<script>
+    $("#submitButtonProject").click(function (ev) {
+
+        ev.preventDefault();
+        debugger;
+
+
+
+        var form = $('#formIdCreateProject')[0];
+        var formData = new FormData(form);
+        //formData.append('file', $('input[type=file]')[0].files[0]);
+
+        //var form = $("#formIdCreateProject").serialize();
+
+
+        var validator = $("#formIdCreateProject").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Materials/CategoryCreate",
+            //data: form,
+            data: formData,
+            processData: false,
+            contentType: false,
+
+
+
+            success: function (data) {
+                if (data === true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Project Create Success',
+                        icon: 'success',
+                        position: 'top-right',
+
+                    })
+                    //reload page after create and Toast message nice na haha
+                    $('#inputName').val('');
+
+                    window.location.href = '/Materials/Category';
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Data is Already Exist in the system',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+                }
+            },
+            error: function (data) {
+                $.toast({
+                    heading: 'Error',
+                    text: 'Project Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+
+    });
+
+    $(".btnUpdate").on('click', function () {
+        debugger;
+        var Id = $(this).attr('id');
+        $.ajax({
+            type: "GET",
+            url: "/Materials/UpdateCategory",
+            data: { materialsId: Id },
+            success: function (response) {
+                $('#project-content').html(response);
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    });
+
+
+
+    $(".deletebtns").click(function () {
+        debugger
+        let id = this.id;
+        $.ajax({
+            type: "POST",
+            url: "/Materials/DeleteCategory",
+            data: { materialsId: id },
+
+            success: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Success',
+                    text: 'Project delete Succeed',
+                    icon: 'success',
+                    position: 'top-right'
+
+                })
+
+                window.location.href = '/Materials/Category';
+
+            },
+            error: function (response) {
+                debugger
+                $.toast({
+                    heading: 'Error',
+                    text: 'Project delete Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+
+        });
+    });
+
+</script>
+

@@ -1,0 +1,117 @@
+﻿@model RoleBased.Models.ViewModel.CategoryViewModel
+<div class="row" style="display:flex; justify-content:center;">
+    <div class="col-md-10">
+        <form id="formIdCreateProject" method="POST" asp-action="UpdateCategory" enctype="multipart/form-data">
+            <h2 class="text-center">Update Category</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-control">
+                <input type="hidden" asp-for="CategoriesId" />
+                <input type="text" asp-for="CategoriesName" class="form-control"  />
+             
+            </div>
+            <div class="gy-5">
+                <button id="submitButtonProject" type="submit" class="btn btn-success">Update It!!</button>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+<script src="~/lib/JqueryToast/jquery.toast.js"></script>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+
+
+<script>
+
+    $("#submitButtonProject").click(function (ev) {
+
+        ev.preventDefault();
+        debugger;
+
+
+
+        var form = $('#formIdCreateProject')[0];
+        var formData = new FormData(form);
+        //formData.append('file', $('input[type=file]')[0].files[0]);
+
+        //var form = $("#formIdCreateProject").serialize();
+
+
+        var validator = $("#formIdCreateProject").validate();
+        if (validator.form() == "") {
+            //If the "Please Select" option is selected display error.
+
+            $.toast({
+                heading: 'Error',
+                text: 'Create Failed Please fill out the Required Details',
+                icon: 'error',
+                position: 'top-right'
+            })
+
+            return false;
+        }
+
+
+        $.ajax({
+
+            type: "POST",
+            url: "/Materials/UpdateCategory",
+            //data: form,
+            data: formData,
+            processData: false,
+            contentType: false,
+
+
+
+            success: function (data) {
+                if (data === true) {
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Category Update Success',
+                        icon: 'success',
+                        position: 'top-right',
+
+                    })
+                    //reload page after create and Toast message nice na haha
+                    $('#inputName').val('');
+
+                    window.location.href = '/Materials/Category';
+                }
+
+                else {
+                    $.toast({
+                        heading: 'Error',
+                        text: 'Data is Already Exist in the system',
+                        icon: 'error',
+                        position: 'top-right'
+                    })
+                }
+            },
+            error: function (data) {
+                $.toast({
+                    heading: 'Error',
+                    text: 'Project Create Failed',
+                    icon: 'error',
+                    position: 'top-right'
+
+                })
+
+            }
+        });
+
+
+    });
+
+</script>
+
+
+

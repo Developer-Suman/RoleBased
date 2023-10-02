@@ -1,0 +1,395 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model RoleBased.Models.ViewModel.ApplicationUserVM
+
+<link rel="stylesheet" href="~/css/dashboard.css"/>
+
+<style>
+    .content-header {
+        padding: 15px .5rem;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard </li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+      
+            <div class="row">
+
+
+            @if (Model.UserRole == "Mechanics")
+            {
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.countUser
+                                </h3>
+                                <p>Registered Mechanics</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6 ">
+                    <!-- small box -->
+                    <div class="small-box bg-success new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.TotalMaterials
+                                </h3>
+                                <p>Total number of Materials</p>
+
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.filterMechanics
+                                </h3>
+                                <p>Accepted Materials</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger new-order">
+
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.filterMechanics
+                                </h3>
+                                <p>Rejected Materials</p>
+
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ./col -->
+                
+            }else if(Model.UserRole == "User")
+            {
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.countUser
+                                </h3>
+                                <p>Registered User</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6 ">
+                    <!-- small box -->
+                    <div class="small-box bg-success new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.GetSpecificUserData
+                                </h3>
+                                <p>Total Addeded Materials</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.AcceptedUsers
+                                </h3>
+                                <p>Total Accepted</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger new-order">
+
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.RejectedUsers
+                                </h3>
+                                <p>Total Rejected</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ./col -->
+                
+            }else
+            {
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.AllUser
+                                </h3>
+                                <p>Total Users</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6 ">
+                    <!-- small box -->
+                    <div class="small-box bg-success new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.filterUser
+  
+                                </h3>
+                                <p>Total Number of Users</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-warning new-order">
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.filterMechanics
+                                </h3>
+                                <p>Total Number of Mechanics</p>
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger new-order">
+
+                        <div class="icon-manage">
+                            <div class="inner">
+                                <h3 class="count-number">
+                                    @Model.countUser
+                                </h3>
+                                <p>Total Number Of Admin</p>
+
+                            </div>
+
+                            <div>
+                                <i class="fa-solid fa-user-plus mt-2" style="font-size:30px;"></i>
+                            </div>
+                        </div>
+
+
+                        <div class="icon">
+
+
+                            <a href="#" class="small-box-footer" style="text-decoration:none; color:#fff;">More info <i class="fas fa-arrow-circle-right"></i></a>
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ./col -->
+                
+            }
+
+
+
+
+
+           
+            </div>
+       
+    </div>
+
+</section>
+
+
+

@@ -1,0 +1,135 @@
+﻿@model RoleBased.Models.ViewModel.ApplicationUserVM
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row mt-3">
+    <div class="col-xl-12 col-md-12 col-lg-12">
+        <div class="card user-pro-list overflow-hidden">
+            <div class="card-body" style="padding:1px;">
+            
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="mb-2 mt-4  ms-2 font-weight-semibold">Users Details</h5>
+                        <hr />
+                        <div class="table-responsive">
+                            <table class="table text-nowrap">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Name</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Name)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Image</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                <img class="avatar avatar-xxl brround" alt="img" src="~/Images/@Model.ProfilePicture" width="40" height="40" asp-append-version="true">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Address</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Address)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">FullName</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Fullname)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Email</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Email)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Contact No</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Phone)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Gender</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Gender_Status)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                      <tr>
+                                        <td>
+                                            <span class="w-50">Latitude</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Latitude)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="w-50">Longitude</span>
+                                        </td>
+                                        <td>:</td>
+                                        <td>
+                                            <span>
+                                                @Html.DisplayFor(model => model.Longitude)
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    
+                                       
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+@*
+                <a asp-action="Index" class="btn btn-green">Back to List</a>*@
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

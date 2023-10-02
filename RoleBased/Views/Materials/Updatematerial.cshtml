@@ -1,0 +1,62 @@
+﻿@model RoleBased.Models.ViewModel.MaterialsIndexVM;
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<hr />
+
+<div class="container" style="max-width:785px;">
+
+    <div class="row">
+        <div class="col-lg-7 col-xl-7 col-md-6 col-sm-7">
+            <div class="card">
+                <div class="card-header border-bottom-0">
+                    <h4 class="card-title">Add Materials</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="UpateMaterials" method="post" enctype="multipart/form-data">
+                        <div class="form-group row">
+
+                            <div class="col-md-9">
+                                <input type="hidden" asp-for="MaterialsViewModel.userId" />
+                                <label for="inputName" class="col-md-3 form-label">Materials Name</label>
+                                <input type="text" asp-for="MaterialsViewModel.materialName" class="form-control" id="inputName" placeholder="Name">
+                                <span asp-validation-for="MaterialsViewModel.materialName" class="text-danger"></span>
+                                <label for="inputName" class="col-md-3 form-label">Amount</label>
+                                <input type="text" asp-for="MaterialsViewModel.Amount" class="form-control" id="inputName" placeholder="Amount">
+                                <span asp-validation-for="MaterialsViewModel.Amount" class="text-danger"></span>
+
+                                <label asp-for="MaterialsViewModel.Image"></label>
+                                <input type="file" asp-for="MaterialsViewModel.File" class="form-control" />
+
+
+
+                            </div>
+
+                            @*<div class="form-group form-check">
+                            <label class="form-check-label">
+                            <input class="form-check-input" asp-for="DepartmentViewModel.is_active" /> @Html.DisplayNameFor(model => model.DepartmentViewModel.is_active)
+                            </label>
+                            </div>*@
+
+
+
+                        </div>
+
+
+                        <div class="form-group mb-0 mt-4 row justify-content-end">
+                            <div class="col-md-9">
+                                <input class="btn btn-primary" type="submit" value="ADD Materials" class="btn btn-primary" />
+
+                                <button class="btn btn-secondary">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

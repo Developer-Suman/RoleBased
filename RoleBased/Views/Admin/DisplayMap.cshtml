@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Get Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Get Location</h2>
+
+<div id="map" style="height: 400px;"></div>
+
+<script>
+    function initMap() {
+        var mapOptions = {
+            center: { lat: 0, lng: 0 }, // Set initial map center
+            zoom: 12 // Set initial zoom level
+        };                                                                                     
+        var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        google.maps.event.addListener(map, 'click', function (event) {
+            var latitude = event.latLng.lat();
+            var longitude = event.latLng.lng();
+
+            // Do something with the latitude and longitude values
+            console.log('Latitude: ' + latitude);
+            console.log('Longitude: ' + longitude);
+        });
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8Gv2pDPSIOZpCt85Pw3ot_KyR82xpis4&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8Gv2pDPSIOZpCt85Pw3ot_KyR82xpis4"></script>

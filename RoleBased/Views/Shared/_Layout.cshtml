@@ -1,0 +1,228 @@
+﻿@using System.Security.Claims;
+@{
+   
+    string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    }
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RoleBased</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RoleBased.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <style>
+        .shadow {
+            box-shadow: -9px 11px 10px 3px rgba(0,0,0,0.95);
+            -webkit-box-shadow: -9px 11px 10px 3px rgba(0,0,0,0.95);
+            -moz-box-shadow: -9px 11px 10px 3px rgba(0,0,0,0.95);
+        }
+
+        .box-content
+        {
+            position: absolute;
+            top: -40px;
+            height: 90px;
+            border: 2px solid black;
+            background-color: #30b380;
+            border-radius: 50%;
+            padding: 10px;
+            z-index: 100;
+            margin-left: 55%;
+            transform: translate(-100%);
+
+        }
+
+        .card-circle
+        {
+            margin-left: 33%;
+            height: 90px;
+            border: 2px solid black;
+            background-color: #30b380;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .footer-background
+        {
+            background-image: url('/Images/footer-banner.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            width: 100%;
+            height: 55vh;
+            max-width: 100%;
+      
+        }
+    </style>
+    <link href="./css/index.css" rel="stylesheet" />
+</head>
+<body>
+
+    <header>
+        <!-- place navbar here -->
+        <!-- top bar start here -->
+        <div class="h-10 border-bottom border-warning px-5 align-items-center d-flex justify-content-between" style="background-color:#30b380;">
+            <div>||</div>
+            <div>
+                <box-icon type="logo" name="youtube"></box-icon>
+                <box-icon type="logo" name="facebook-circle"></box-icon>
+                <box-icon name="twitter" type="logo"></box-icon>
+                <box-icon name="instagram-alt" type="logo"></box-icon>
+            </div>
+            <!-- //logo and search -->
+        </div>
+        <div class="px-5 d-flex align-items-center justify-content-between">
+            <div>
+                <img src="~/Images/Logo.png"
+                     height="110px"
+                     style="object-fit: contain"
+                     width="150px" />
+            </div>
+            <div>
+   
+                
+
+                <form class="d-flex" style="align-items:center;">
+                    <input class="form-control me-2" type="search" placeholder="Search" style="border:none; border-bottom:2px solid green; ">
+                    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+          
+                </form>
+            </div>
+        </div>
+        <!-- //navbar start here -->
+        <div class="px-1 ms-2">
+            <ul class="d-flex gap-4">
+                <li style="list-style-type:none;">
+                 
+                    <a class="  text-decoration-none text-success fw-bolder fst-italic" asp-area="" asp-controller="Home" asp-action="HomePages">HOME</a>
+                </li>
+                <li style="list-style-type:none;">
+                    <a class="text-decoration-none text-success fw-bolder fst-italic"
+                       href="#">ABOUT</a>
+                </li>
+                <li style="list-style-type:none;">
+                    <a class="text-decoration-none text-success fw-bolder fst-italic"
+                       href="#">SERVICES</a>
+                </li>
+                <li style="list-style-type:none;">
+                    <a class="text-decoration-none text-success fw-bolder fst-italic"
+                       href="#">PRODUCTS</a>
+                </li>
+                <li style="list-style-type:none;">
+                    <a class="text-decoration-none text-success fw-bolder fst-italic"
+                       href="#">WORKS</a>
+                </li>
+                <li style="list-style-type:none;">
+                
+                    <a class="text-decoration-none text-success fw-bolder fst-italic" asp-area="" asp-controller="Account" asp-action="Login">LOGIN</a>
+                </li>
+            </ul>
+        </div>
+        <hr style="border: 2px solid #30b380" />
+    </header>
+
+
+
+   
+            @RenderBody()
+
+
+    <footer>
+        <div class="container-fluid footer-background shadow mt-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="px-4 d-flex align-items-center justify-content-between">
+                            <div>
+                                <img src="~/Images/Logo.png"
+                                     height="90px"
+                                     style="object-fit: contain"
+                                     width="130px" />
+                            </div>
+                        </div>
+                        <div class="px-4 d-flex align-items-center justify-content-between" style="font-family: Poppins; font-weight: 600; font-size: 15px;">
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.  consectetur recusandae perspiciatis minus consequatur deserunt ab provident eius. Voluptates quod dolore rem laudantium repellat consectetur accusamus tempore corrupti? Officiis, hic.
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="ms-5" style="font-family: Poppins; font-weight: 500; font-size: large;">CATEGORIES</div>
+                        <hr style="width: 40%; height: 2px; background-color: black; padding: 0px;">
+                        <ul class="ms-3" style="list-style-type: none; font-family: Poppins; font-weight: 500; font-size:15px;  ">
+                            <li>Politics</li>
+                            <li>Health</li>
+                            <li>Organization</li>
+                            <li>Sports</li>
+                            <li>Education</li>
+
+                        </ul>
+
+                    </div>
+                    <div class="col-md-4 mt-4">
+                        <div class="ms-5" style="font-family: Poppins; font-weight: 500; font-size: large;">SECTOR</div>
+                        <hr style="width: 40%; height: 2px; background-color: black; padding: 0px;">
+                        <ul class="ms-3" style="list-style-type: none; font-family: Poppins; font-weight: 500; font-size:15px;  ">
+                            <li>Politics</li>
+                            <li>Health</li>
+                            <li>Organization</li>
+                            <li>Sports</li>
+                            <li>Education</li>
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </footer>
+    
+    
+
+
+   @* <script src="~/lib/jquery/dist/jquery.min.js"></script>*@
+    <script src="~/assets/plugins/jquery/jquery.min.js"></script>
+
+    <!--Moment js-->
+    <script src="~/assets/plugins/moment/moment.js"></script>
+
+    @*jquery css and js*@
+    <link href="~/lib/JqueryToast/jquery.toast.css" rel="stylesheet" />
+    <script src="~/lib/JqueryToast/jquery.toast.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+
+
+    <script src="~/assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- INTERNAL Data tables -->
+    <script src="~/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.bootstrap4.js"></script>
+    <script src="~/assets/plugins/datatable/js/dataTables.buttons.min.js"></script>
+    <script src="~/assets/plugins/datatable/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/assets/plugins/datatable/dataTables.responsive.min.js"></script>
+    <script src="~/assets/plugins/datatable/responsive.bootstrap4.min.js"></script>
+    
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+            crossorigin="anonymous"></script>
+</body>
+</html>

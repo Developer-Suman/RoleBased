@@ -1,0 +1,187 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@model RoleBased.Models.ViewModel.LoginModel
+
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+   @* <link rel="stylesheet" href="style.css">*@
+    <title>Hello, world!</title>
+
+    <style>
+
+
+       /* .parent {
+            background-image: url("../Images/login.png");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            object-fit: cover;
+            width: 100%;
+            min-height: 100vh;
+        }*/
+
+        .login-label{
+            margin:3px;
+        }
+
+        .login-label:last-of-type{
+                margin-top: 0.5rem;
+            }
+
+
+        form {
+            border: 3px solid white;
+            width: 100%;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding-left:10px;
+            height:29px;
+            margin: 0px 0;
+            display: inline-block;
+            border: 1px solid #30B380;
+            border-radius: 4%;
+            box-sizing: border-box;
+        }
+
+        button {
+           
+            color: white;
+            padding: 5px 7px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius:6px;
+        }
+
+   /*     .logincontainer {
+            box-shadow: 10px 10px 5px -9px rgba(0,0,0,0.5);
+            -webkit-box-shadow: 10px 10px 5px -9px rgba(0,0,0,0.5);
+            -moz-box-shadow: 10px 13px 5px -9px rgba(0,0,0,0.5);
+        }*/
+
+
+        .msg {
+            padding: 0px;
+        }
+
+        .err {
+            color: red;
+        }
+    </style>
+   <link href="~/css/materials.css" rel="stylesheet" />
+</head>
+<body>
+
+
+
+
+
+    <div class="parent my-5">
+        <div class="container">
+            <div class="row d-flex" style="align-items: center; ">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+
+                    <h5 class="mt-5" style="font-weight: bold; font-style: italic; display:inline;">Make Your City Clean</h5>
+                   @* <img src="~/Images/logo.png"  height="30px" width="150px" style="max-width: 100%;" />*@
+                    <div class=" mt-3">
+                        <div class="container ">
+                            <div class="row login-card loginCard">
+                                <div class="col-md-6 d-flex" style="justify-content: center; align-items: center; background-color:#5fd3a6;">
+                                    <div class="container-box">
+                                        <h5>&nbspWELCOME TO</h5>
+                                        <div class="box d-flex" style="border:1px solid black; justify-content: center; border-radius:5px;">
+
+                                            <img src="~/Images/dustbin.png" class="mt-2" height="90px" width="65px" />
+
+
+
+                                        </div>
+                                        <h5 class="text-center mt-2" style="font-size: small;">Our Valued Customer</h5>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+
+
+                                <div class="col-md-6 mt-4">
+                                    <div>
+                                        <h5 class="m-0" style="font-weight: bold; font-style: italic; font-size:12px;">Log In To</h5>
+                                        <img src="~/Images/logo.png" class="ms-3" height="20px" width="95px" style="max-width: 100%;" />
+                                        <div class="border border-red mt-4" style="width: 90%;">
+                                            <div class="container">
+                                                <form asp-action="Login" method="POST" enctype="multipart/form-data">
+                                                    <div class="container">
+                                                        <label class="login-label" asp-for="Username">Username</label>
+                                                        <input required type="text" asp-for="Username" />
+                                                        <div class="msg">
+                                                            <span class="err" asp-validation-for="Username"></span>
+                                                        </div>
+
+                                                        <label class="login-label" asp-for="Password">Password</label>
+                                                        <input required type="password" asp-for="Password" />
+                                                        <div class="msg">
+                                                            <span class="err" asp-validation-for="Password"></span>
+                                                        </div>
+
+                                                        @if (TempData["msg"] != null)
+                                                        {
+                                                                <div class="msg">
+                                                                    <span class="err">@TempData["msg"]</span>
+                                                                </div>
+                                                        }
+
+                                                        <button type="submit" style="background-color:#5fd3a6;color:#fff;">LogIn</button>
+                                                        <div class="py-2 text-center">
+                                                            <small>
+                                                                <a  style="text-decoration:none;" href="/Account/Registration">Not a user? Sign Up</a>
+                                                            </small>
+                                                            
+                                                        </div>
+
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-1">
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

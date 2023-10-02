@@ -1,0 +1,42 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Application roles";
+}
+
+   
+<div class="d-flex" style="justify-content:space-between">
+    <div>
+
+</div>
+<div class="p-4">
+        <a class="btn" style="background-color:#33b482; color:#fff;" asp-action="Create">Create</a>
+</div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model=>model.Id)</th>
+            <th>@Html.DisplayNameFor(model=>model.Name)</th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem=>item.Id)</td>
+                <td>@Html.DisplayFor(modelItem=>item.Name)</td>
+            </tr>
+        }
+    </tbody>
+</table>
